@@ -16,5 +16,10 @@ class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     document = db.Column(db.Integer())
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sold_at = db.Column(db.DateTime())
+    total = db.Column(db.Numeric(2))
     
     
