@@ -19,8 +19,8 @@ class CustomerSchema(SQLAlchemyAutoSchema):
         unknown = EXCLUDE 
 
 class OrderSchema(SQLAlchemyAutoSchema):
+    customer = fields.Nested(CustomerSchema)
+    products = fields.List(fields.Nested(ProductSchema))
     class Meta:
         model = Order
-        customer = fields.Nested(CustomerSchema)
-        products = fields.List(fields.Nested(ProductSchema))
         unknown = EXCLUDE 
