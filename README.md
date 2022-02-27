@@ -36,3 +36,7 @@ Respectivamente: web framework para Python, biblioteca de serialização e deser
 - Vim
 
 Editor de texto 
+
+- Postman 
+
+Para testar as requisições
