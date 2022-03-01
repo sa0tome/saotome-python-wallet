@@ -10,5 +10,6 @@ marshmallow-sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-db = "*"
+requests = "*"
 
 [dev-packages]
