@@ -15,7 +15,7 @@ class Product(db.Model):
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    document = db.Column(db.Integer())
+    document = db.Column(db.String(11))
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,15 +1,39 @@
 from flask import Blueprint, request
 from marshmallow import exceptions
 from .serializers import OrderSchema, CustomerSchema, ProductSchema
+from .utils import calculate_cashback
+import requests
+
+EXTERNAL_API_URL = 'https://5efb30ac80d8170016f7613d.mockapi.io/api/mock/Cashback' 
 
 bp_cashback = Blueprint('cashback', __name__)
 
 @bp_cashback.route('/api/cashback', methods=['POST'])
 def cashback():
-    os = OrderSchema()
     try:
-        order = os.load(request.json)
+        order = validation(request)
     except exceptions.ValidationError as e:
         message = e.normalized_messages()
         return message, 400
-    return order, 201
+
+    cashback = 0
+    for product in order['products']:
+        try:
+            cashback += calculate_cashback(product)
+        except Exception as e:
+            message = "Product type not allowed" 
+            return message, 400 
+
+    data = {'cashback': cashback, 'document': order['customer']['document']}
+    response = send_request(data)
+
+    return response.text, response.status_code 
+
+def validation(request):
+    os = OrderSchema()
+    order = os.load(request.json)
+    return order
+
+def send_request(payload):
+    response = requests.post(EXTERNAL_API_URL, data=payload)
+    return response
