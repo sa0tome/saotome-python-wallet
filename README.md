@@ -33,6 +33,10 @@ Gerenciador de pacotes pip com virtual env automático
 
 Respectivamente: web framework para Python, biblioteca de serialização e deserialização e ORM
 
+- requests
+
+Biblioteca para Python para enviar requisições
+
 - Vim
 
 Editor de texto 
