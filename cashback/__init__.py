@@ -13,4 +13,5 @@ def create_app():
     Migrate(app, app.db)
     from .cashback import bp_cashback
     app.register_blueprint(bp_cashback)
+
     return app
