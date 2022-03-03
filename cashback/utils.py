@@ -7,4 +7,3 @@ def calculate_cashback(product):
     for key, value in TYPE_CASHBACK.items():
         if key == product['type']:
             return Decimal(value)*total
-    raise Exception(product['type'] + ' type not allowed') 

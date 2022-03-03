@@ -18,11 +18,7 @@ def cashback():
 
     cashback = 0
     for product in order['products']:
-        try:
-            cashback += calculate_cashback(product)
-        except Exception as e:
-            message = "Product type not allowed" 
-            return message, 400 
+        cashback += calculate_cashback(product)
 
     data = {'cashback': cashback, 'document': order['customer']['document']}
     response = send_request(data)
