@@ -69,13 +69,13 @@ curl --location --request POST 'http://127.0.0.1:5000/api/cashback' \
 
 Gerenciador de pacotes pip com virtual env automático
 
-- Flask, flask-marshmallow, marshmallow-sqlalchemy
+- Flask, flask-marshmallow, marshmallow-sqlalchemy, flask-migrate, flask-sqlalchemy, flask-db, flask-httpauth
 
-Respectivamente: web framework para Python, biblioteca de serialização e deserialização e ORM
+Respectivamente: web framework para Python, biblioteca de serialização e deserialização, extensão do Flask para migração, ORM, extensão do Flask para lidar com banco de dados, biblioteca para http auth
 
-- requests
+- requests, base64
 
-Biblioteca para Python para enviar requisições
+Respectivamente: biblioteca para enviar requisições, biblioteca para codificar e decodificar em base64
 
 - Vim
 
