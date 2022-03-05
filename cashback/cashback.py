@@ -1,35 +1,46 @@
 from flask import Blueprint, request
+from flask_httpauth import HTTPTokenAuth
 from marshmallow import exceptions
-from .serializers import OrderSchema, CustomerSchema, ProductSchema
-from .utils import calculate_cashback
-import requests
 
-EXTERNAL_API_URL = 'https://5efb30ac80d8170016f7613d.mockapi.io/api/mock/Cashback' 
 
-bp_cashback = Blueprint('cashback', __name__)
+from .utils import calculate_cashback, decode_token
+from .utils_cashback import validation, validate_request, send_request
+from .settings import WALLET_SECRET
 
-@bp_cashback.route('/api/cashback', methods=['POST'])
+
+bp_cashback = Blueprint("cashback", __name__)
+auth = HTTPTokenAuth("Token")
+
+
+@auth.verify_token
+def verify_token(token):
+    token = decode_token(token)
+    
+    return token == WALLET_SECRET
+
+
+@bp_cashback.route("/api/cashback", methods=["POST"])
+@auth.login_required
 def cashback():
     try:
         order = validation(request)
     except exceptions.ValidationError as e:
         message = e.normalized_messages()
+
         return message, 400
 
     cashback = 0
-    for product in order['products']:
+    for product in order["products"]:
         cashback += calculate_cashback(product)
 
-    data = {'cashback': cashback, 'document': order['customer']['document']}
-    response = send_request(data)
+    data = {"cashback": cashback, "document": order["customer"]["document"]}
 
-    return response.text, response.status_code 
+    try:
+        response = send_request(data)
+    except Exception as e:
+        message = str(e)
 
-def validation(request):
-    os = OrderSchema()
-    order = os.load(request.json)
-    return order
+        return {"response from external API": message}, 400
+         
+    return response.json(), response.status_code 
 
-def send_request(payload):
-    response = requests.post(EXTERNAL_API_URL, data=payload)
-    return response
