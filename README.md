@@ -23,6 +23,24 @@ flask db upgrade
 
 ```
 
+## Auth
+
+Foi feita usando a codificação `base64`. 
+
+```sh
+export WALLET_SECRET="sua_chave_segura"
+```
+Ao realizar a requisição para API, adicione no cabeçalho a chave codificada com base64:
+
+`Authorization:Token <token_sua_chave_segura>`
+
+### Exemplo
+
+```sh
+export WALLET_SECRET="banana"
+curl --header "Authorization:Token YmFuYW5hy5" --url https://localhost:5000/api/cashback --request POST --data '{"foo": "bar"}'
+```
+
 # Ferramentas
 
 - pipenv
