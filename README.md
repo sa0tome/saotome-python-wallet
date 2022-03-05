@@ -38,7 +38,29 @@ Ao realizar a requisição para API, adicione no cabeçalho a chave codificada c
 
 ```sh
 export WALLET_SECRET="banana"
-curl --header "Authorization:Token YmFuYW5hy5" --url https://localhost:5000/api/cashback --request POST --data '{"foo": "bar"}'
+curl --location --request POST 'http://127.0.0.1:5000/api/cashback' \
+--header 'Authorization: Token YmFuYW5h' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "sold_at": "2026-01-02 00:00:00",
+    "customer": {
+       "document": "00000000000",
+       "name": "JOSE DA SILVA"
+    },
+    "total": "100.00",
+    "products": [
+       {
+          "type": "A",
+          "value": "10.00",
+          "qty": 1
+       },
+       {
+          "type": "B",
+          "value": "10.00",
+          "qty": 9
+       }
+    ]
+}'
 ```
 
 # Ferramentas
