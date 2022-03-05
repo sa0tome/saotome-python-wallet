@@ -32,7 +32,7 @@ export WALLET_SECRET="sua_chave_segura"
 ```
 Ao realizar a requisição para API, adicione no cabeçalho a chave codificada com base64:
 
-`Authorization:Token <token_sua_chave_segura>`
+`Authorization: Token <token_sua_chave_segura>`
 
 ### Exemplo
 
